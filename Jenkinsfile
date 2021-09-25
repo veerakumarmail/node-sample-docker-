@@ -17,7 +17,7 @@ pipeline {
                 sh 'npm install'
                 sh 'npm run build'
                 sh 'docker build -t veerakumarmail/docker-node-sample:$BUILD_NUMBER .'
-                withCredentials([usernamePassword(credentialsId: 'dff-docker', passwordVariable: 'password', usernameVariable: 'username')]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'password', usernameVariable: 'username')]) {
                     sh "docker login --username ${username} --password ${password}"
                     sh 'docker push veerakumarmail/docker-node-sample:$BUILD_NUMBER'
                 }
@@ -25,7 +25,7 @@ pipeline {
         }
         stage('ssh') {
             when {
-                branch 'main'
+                branch 'qa'
             }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dff-qa', passwordVariable: 'password', usernameVariable: 'userName')]) {
