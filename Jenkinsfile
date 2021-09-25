@@ -25,12 +25,12 @@ pipeline {
         }
         stage('ssh') {
             when {
-                branch 'qa'
+                branch 'main'
             }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dff-qa', passwordVariable: 'password', usernameVariable: 'userName')]) {
                             script {
-                                def remote = [:]
+                              /**  def remote = [:]
                                 remote.allowAnyHosts = true
                                 remote.name = "root"
                                 remote.host = "node1.dfftech.com"
@@ -40,7 +40,8 @@ pipeline {
                                 sshCommand remote: remote, command: "docker ps -a -q --filter name=demo-api | xargs -r docker rm"
                                 sshCommand remote: remote, command: "docker pull veerakumarmail/docker-node-sample:$BUILD_NUMBER"
                                 sshCommand remote: remote, command: "docker run -d -p 6001:5000 --name=demo-api -e ENV_demo_DB=$ENV_DEMO_DB veerakumarmail/docker-node-sample:$BUILD_NUMBER"
-                            }
+                         **/
+                         }
 
 
                 }
